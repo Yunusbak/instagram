@@ -1,0 +1,66 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="static" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="19">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="fonts" />
+            <item index="7" class="java.lang.String" itemvalue="https" />
+            <item index="8" class="java.lang.String" itemvalue="family" />
+            <item index="9" class="java.lang.String" itemvalue="all" />
+            <item index="10" class="java.lang.String" itemvalue="bootstrap-icons" />
+            <item index="11" class="java.lang.String" itemvalue="cdn" />
+            <item index="12" class="java.lang.String" itemvalue="libs" />
+            <item index="13" class="java.lang.String" itemvalue="bootstrap" />
+            <item index="14" class="java.lang.String" itemvalue="jquery" />
+            <item index="15" class="java.lang.String" itemvalue="ajax" />
+            <item index="16" class="java.lang.String" itemvalue="css2" />
+            <item index="17" class="java.lang.String" itemvalue="Inter" />
+            <item index="18" class="java.lang.String" itemvalue="js" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="15">
+            <item index="0" class="java.lang.String" itemvalue="Django" />
+            <item index="1" class="java.lang.String" itemvalue="babel" />
+            <item index="2" class="java.lang.String" itemvalue="pillow" />
+            <item index="3" class="java.lang.String" itemvalue="psycopg2" />
+            <item index="4" class="java.lang.String" itemvalue="python-dotenv" />
+            <item index="5" class="java.lang.String" itemvalue="aiohappyeyeballs" />
+            <item index="6" class="java.lang.String" itemvalue="aiohttp" />
+            <item index="7" class="java.lang.String" itemvalue="attrs" />
+            <item index="8" class="java.lang.String" itemvalue="diff-match-patch" />
+            <item index="9" class="java.lang.String" itemvalue="tablib" />
+            <item index="10" class="java.lang.String" itemvalue="django-import-export" />
+            <item index="11" class="java.lang.String" itemvalue="tzdata" />
+            <item index="12" class="java.lang.String" itemvalue="asgiref" />
+            <item index="13" class="java.lang.String" itemvalue="djangorestframework" />
+            <item index="14" class="java.lang.String" itemvalue="sqlparse" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

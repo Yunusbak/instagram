@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+</head>
+<body>
+    <h1>Профиль пользователя: {{ user.username }}</h1>
+    <ul>
+        <li>Email: {{ user.email }}</li>
+        <li>Имя: {{ user.first_name }} {{ user.last_name }}</li>
+        <li>Создано: {{ user.created_at }}</li>
+    </ul>
+</body>
+</html>
