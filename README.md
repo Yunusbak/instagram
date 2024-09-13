@@ -3,3 +3,8 @@ https://github.com/Yunusbak/project/blob/master/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D
 
 Assalomu aleykum yanada security qilish uchun nima ishlar qilish kerak?
 
+
+
+
+https://github.com/Yunusbak/project/blob/master/Screenshot_2024-09-13-06-34-49-318_org.telegram.messenger.jpg
+Tg bot 
