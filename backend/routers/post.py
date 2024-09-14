@@ -15,14 +15,20 @@ post_router = APIRouter(prefix="/posts", tags=["posts"])
 @post_router.get("/")
 async def post(Authorization: AuthJWT = Depends()):
     try:
-        Authorization.jwt_required()
+        # Authorization.jwt_required()
         posts = Session.query(Post).all()
         if posts:
             data = {
                 "status": "success",
-                "posts": jsonable_encoder(posts)
+                "posts": [{
+                    "user" : post.user.username,
+                    "image_path" : post.image_path,
+                    "caption" : post.caption,
+                    "created_at" : post.created_at,
+                } for post in posts]
+
             }
-            return data
+            return jsonable_encoder(data)
         else:
             return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Post not found')
 

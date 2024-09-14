@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Posts Page</h1>
+  {% for post in posts %}
+    <p>Post User : {{ post.user }}</p>
+    <p>Post url : <a href="{{post.image_path}}">url</a></p>
+    <p>Post caption : {{post.caption}}</p>
+    <p>Post created : {{post.created_at}}</p>
+  ----------------------------------------------------
+  {% endfor %}
+{% endblock %}
+</body>

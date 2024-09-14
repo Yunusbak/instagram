@@ -10,8 +10,6 @@ class Settings(BaseModel):
     authjwt_secret_key : str=os.getenv('authjwt_secret_key')
 
 
-
-
 # User Register #
 
 class UserRegister(BaseModel):

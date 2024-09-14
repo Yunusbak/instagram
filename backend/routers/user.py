@@ -15,7 +15,7 @@ user_router = APIRouter(prefix="/users", tags=["users"])
 @user_router.get('/')
 async def get_users(Authorize: AuthJWT = Depends()):
     try:
-        Authorize.jwt_required()
+        # Authorize.jwt_required()
         users = Session.query(User).all()
         if users:
             data = {
@@ -67,7 +67,6 @@ async def get_user(Authorize: AuthJWT = Depends()):
 @user_router.get('/user/{id}')
 async def get_user(id: uuid.UUID):
     try:
-
         user = Session.query(User).filter(User.id == id).first()
         data = {
             "status": 200,

@@ -1,12 +1,12 @@
-import datetime
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from fastapi_jwt_auth import AuthJWT
 from models import User
 from schemas import UserRegister, UserLogin, Settings
 from database import Session, ENGINE
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from fastapi.responses import JSONResponse
+import datetime
 
 
 Session = Session(bind=ENGINE)
@@ -51,8 +51,10 @@ async def register(user: UserRegister):
 
 
 
+from fastapi.responses import JSONResponse
+
 @auth_router.post('/login')
-async def login(user: UserLogin, Authorize : AuthJWT = Depends()):
+async def login(user: UserLogin, Authorize: AuthJWT = Depends()):
     check_user = Session.query(User).filter(User.username == user.username).first()
     if check_user:
         if check_password_hash(check_user.password, user.password):
@@ -62,25 +64,25 @@ async def login(user: UserLogin, Authorize : AuthJWT = Depends()):
             data = {
                 "status": 200,
                 "message": "Logged in successfully",
-                "token":{
+                "token": {
                     "access_token": access_token,
                     "refresh_token": refresh_token,
                 }
             }
-            return jsonable_encoder(data)
+            return JSONResponse(status_code=status.HTTP_200_OK, content=data)
 
         else:
-            data= {
+            data = {
                 "status": 401,
                 "message": "Password is incorrect"
             }
-            return jsonable_encoder(data)
+            return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=data)
     else:
         data = {
             "status": 401,
             "message": "Username or password is incorrect"
         }
-        return jsonable_encoder(data)
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=data)
 
 
 
