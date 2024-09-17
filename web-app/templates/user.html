@@ -2,11 +2,13 @@
 {% block content %}
   <h1>Users Page</h1>
         {% for user in users %}
-            <li>
-                ----------------------------------------
-                <h3>Username : <a href="{% url 'user-detail' user.id %}">{{user.username}}</a></h3>
-                <h3>First name: {{ user.first_name }}</h3>
-                <h3>Last name: {{ user.last_name }}</h3>
-            </li>
+
+                <li>
+                    ----------------------------------------
+                    <h3>Username : <a href="{% url 'user-detail' user.id %}">{{user.username}}</a></h3>
+                    <h3>First name: {{ user.first_name }}</h3>
+                    <h3>Last name: {{ user.last_name }}</h3>
+                </li>
+
         {% endfor %}
 {% endblock %}

@@ -5,7 +5,6 @@ from models import User
 from schemas import UserRegister, UserLogin, Settings
 from database import Session, ENGINE
 from werkzeug.security import generate_password_hash, check_password_hash
-from fastapi.responses import JSONResponse
 import datetime
 
 
@@ -58,8 +57,8 @@ async def login(user: UserLogin, Authorize: AuthJWT = Depends()):
     check_user = Session.query(User).filter(User.username == user.username).first()
     if check_user:
         if check_password_hash(check_user.password, user.password):
-            access_token = Authorize.create_access_token(subject=check_user.username, expires_time=datetime.timedelta(minutes=30))
-            refresh_token = Authorize.create_refresh_token(subject=check_user.username, expires_time=datetime.timedelta(hours=5))
+            access_token = Authorize.create_access_token(subject=check_user.username, expires_time=datetime.timedelta(seconds=30))
+            refresh_token = Authorize.create_refresh_token(subject=check_user.username, expires_time=datetime.timedelta(minutes=1))
 
             data = {
                 "status": 200,
@@ -85,5 +84,10 @@ async def login(user: UserLogin, Authorize: AuthJWT = Depends()):
         return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=data)
 
 
+@auth_router.get('/verify')
+async def verify(Authorize: AuthJWT = Depends()):
+    try:
+        Authorize.jwt_required()
 
-
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid token')

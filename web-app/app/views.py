@@ -1,67 +1,79 @@
 import requests
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.views import View
+from django.http import HttpResponse, HttpResponseRedirect
 
+from .forms import RegistrationForm, LoginForm
 
-def register(request):
-    if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        username = request.POST['username']
-        password = request.POST['password']
+class RegisterView(View):
+    def get(self, request):
+        form = RegistrationForm()
+        return render(request, 'auth/register.html', {'form': form})
 
-        response = requests.post('http://127.0.0.2:8000/auth/register', json={
-            'first_name': first_name,
-            'last_name': last_name,
-            'email': email,
-            'username': username,
-            'password': password
-        })
-        if response.status_code == 200:
-            messages.success(request, f'Account created for {first_name} {last_name}!')
-            return redirect('login')
-
-        else:
-            messages.error(request, f'Something went wrong. Please try again!')
-
-
-    return render(request, 'auth/register.html')
-
-
-
-def login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        response = requests.post('http://127.0.0.2:8000/auth/login', json={
-            'username': username,
-            'password': password
-        })
-        if response.status_code == 200:
-            data = response.json()
-            access_token = data['token']['access_token']
-            refresh_token = data['token']['refresh_token']
-            request.session['access_token'] = access_token
-            request.session['refresh_token'] = refresh_token
-            messages.success(request, f'You are now logged in!')
-            return redirect('user-list')
+    def post(self, request):
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            url = 'http://127.0.0.2:8005/auth/register'
+            data = {
+                'first_name': form.cleaned_data['first_name'],
+                'last_name': form.cleaned_data['last_name'],
+                'email': form.cleaned_data['email'],
+                'username': form.cleaned_data['username'],
+                'password': form.cleaned_data['password'],
+            }
+            response = requests.post(url, json=data)
+            if response.json()['status'] == 201:
+                return HttpResponse('User registered successfully')
+            else:
+                return HttpResponse('Something went wrong')
 
         else:
-            messages.error(request, f'Something went wrong. Please try again!')
-            return redirect('login')
-
-    return render(request, 'auth/login.html')
+            return render(request, 'auth/register.html', {'form': form})
 
 
-def base(request):
-    return render(request, 'base.html')
+class LoginView(View):
+    def get(self, request):
+        form = LoginForm()
+        return render(request, 'auth/login.html', {'form': form})
 
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            url = 'http://127.0.0.2:8005/auth/login'
+            data = {
+                'username': form.cleaned_data['username'],
+                'password': form.cleaned_data['password'],
+            }
+            response = requests.post(url, json=data)
+            if response.json()['status'] == 200:
+                access_token = response.json()['token']['access_token']
+                response = redirect("users")
+                response.set_cookie('access_token', access_token,  httponly=True)
+                return response
+            else:
+                return HttpResponse('Something went wrong')
+
+        return render(request, 'auth/login.html', {'form': form})
 
 def user_list(request):
-    users = requests.get('http://127.0.0.2:8005/users/').json()['users']
-    return render(request, 'user.html', {'users': users})
+    access_token = request.COOKIES.get('access_token')
+    if not access_token:
+        return redirect('login')
+
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+    response = requests.get('http://127.0.0.2:8005/auth/verify', headers=headers)
+    if response.status_code == 200:
+        return HttpResponse('siz muvaffaqiyatli tizimga kirdingiz')
+    elif response.status_code == 401:
+        response = HttpResponseRedirect('/login/')
+        response.delete_cookie('access_token')
+        return response
+    else:
+        return HttpResponse('Something went wrong')
+
 
 
 

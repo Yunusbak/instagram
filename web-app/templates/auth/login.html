@@ -7,20 +7,10 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form method="POST" action="{% url 'login' %}">
+    <form method="POST">
         {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
+            {{form.as_p}}
         <button type="submit">Login</button>
     </form>
-    {% if messages %}
-        {% for message in messages %}
-            <p style="color: red">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
 </body>
 </html>
